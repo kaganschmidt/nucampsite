@@ -1,20 +1,62 @@
 console.log('javascript connected!');
-    
+
 const carousel = new bootstrap.Carousel('#homeCarousel', {
-    interval: 2000,
+    interval: 5000,
     pause: false
 })
 
-// when the pause button is clicked, pause the carousel
-const carouselPause = document.getElementById('carouselPause');
-carouselPause.addEventListener('click', function() {
-    console.log('pausing the carousel');
-    carousel.pause();
-})
+const carouselButton = document.getElementById('carouselButton');
+const faIcon = document.getElementById('faButton');
+
+carouselButton.addEventListener('click', function () {
+    if (faIcon.classList.contains('fa-pause')) {
+        faIcon.classList.remove('fa-pause');
+        faIcon.classList.add('fa-play');
+        carousel.pause();
+    } else {
+        faIcon.classList.remove('fa-play');
+        faIcon.classList.add('fa-pause');
+        carousel.cycle();
+    }
+}) 
 
 // when the play button is clicked, begin cycling through the images
-const carouselPlay = document.getElementById('carouselPlay');
-carouselPlay.addEventListener('click', function() {
-    console.log('cycle the carousel');
-    carousel.cycle();
-})
+//const carouselPlay = document.getElementById('carouselPlay');
+//carouselPlay.addEventListener('click', function () {
+    //console.log('cycle the carousel');
+    //carousel.cycle();
+//})
+
+async function fetchWeather() {
+    try{
+    //const apiKey = process.env.OPEN_WEATHER_API_KEY;
+    const apiKey = "25b879a13c188700e17519a1db24b52c"
+
+    const city = "St. Louis, MO";
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+    let weatherData = await fetch(url);
+    let json = await weatherData.json();
+    displayWeather(json); 
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+fetchWeather();
+
+function displayWeather(json) {
+    json[0].main.temp = this.temp;
+    json[0].weather.description = this.desc;
+    json[0].weather.icon = this.icon;
+
+    let img = document.createElement('img');
+    img.src = `https://openweathermap.org/img/w/${this.icon}.png`;
+    document.querySelector('container').appendChild(img);
+
+    let tempNode = document.header.createTextNode(`${this.temp} \u00B0`);
+    document.header.appendChild(tempNode);
+
+    let descNode = document.header.createTextNode(`${this.desc}`);
+    document.header.appendChild(descNode);
+
+}
