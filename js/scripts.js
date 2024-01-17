@@ -28,8 +28,6 @@ carouselButton.addEventListener('click', function () {
 //})
  
 //const apiKey = process.env.OPEN_WEATHER_API_KEY;
-//const apiKey = "25b879a13c188700e17519a1db24b52c"
-const apiKey = "f458daf6a16f1f3203bad511e603a732"
 
 const city = "Bradenton";
 const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
