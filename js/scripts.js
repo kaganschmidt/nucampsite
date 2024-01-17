@@ -26,7 +26,7 @@ carouselButton.addEventListener('click', function () {
 //console.log('cycle the carousel');
 //carousel.cycle();
 //})
- 
+
 //const apiKey = process.env.OPEN_WEATHER_API_KEY;
 
 const city = "Bradenton";
