@@ -18,25 +18,27 @@ carouselButton.addEventListener('click', function () {
         faIcon.classList.add('fa-pause');
         carousel.cycle();
     }
-}) 
+})
 
 // when the play button is clicked, begin cycling through the images
 //const carouselPlay = document.getElementById('carouselPlay');
 //carouselPlay.addEventListener('click', function () {
-    //console.log('cycle the carousel');
-    //carousel.cycle();
+//console.log('cycle the carousel');
+//carousel.cycle();
 //})
+ 
+//const apiKey = process.env.OPEN_WEATHER_API_KEY;
+//const apiKey = "25b879a13c188700e17519a1db24b52c"
+const apiKey = "f458daf6a16f1f3203bad511e603a732"
+
+const city = "Bradenton";
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
 
 async function fetchWeather() {
-    try{
-    //const apiKey = process.env.OPEN_WEATHER_API_KEY;
-    const apiKey = "25b879a13c188700e17519a1db24b52c"
-
-    const city = "St. Louis, MO";
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-    let weatherData = await fetch(url);
-    let json = await weatherData.json();
-    displayWeather(json); 
+    try {
+        let weatherData = await fetch(url);
+        let json = await weatherData.json();
+        displayWeather(json);
     } catch (error) {
         console.log(error);
     }
@@ -45,18 +47,17 @@ async function fetchWeather() {
 fetchWeather();
 
 function displayWeather(json) {
-    json[0].main.temp = this.temp;
-    json[0].weather.description = this.desc;
-    json[0].weather.icon = this.icon;
+    let temp = json[0].main.temp;
+    let desc = json[0].weather.description;
+    let icon = json[0].weather.icon;
 
-    let img = document.createElement('img');
-    img.src = `https://openweathermap.org/img/w/${this.icon}.png`;
-    document.querySelector('container').appendChild(img);
+    img = document.createElement('img');
+    img.src = `https://openweathermap.org/img/w/${icon}.png`;
+    document.getElementById('weather-icon').appendChild(img);
 
-    let tempNode = document.header.createTextNode(`${this.temp} \u00B0`);
-    document.header.appendChild(tempNode);
+    tempNode = weather.createTextNode(`${temp} \u00B0`);
+    document.getElementById('weather-temp').appendChild(tempNode);
 
-    let descNode = document.header.createTextNode(`${this.desc}`);
-    document.header.appendChild(descNode);
-
+    descNode = document.body.createTextNode(`${desc}`);
+    document.getElementById('weather-description').appendChild(descNode);
 }
